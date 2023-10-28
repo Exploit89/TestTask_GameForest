@@ -27,6 +27,7 @@ namespace WindowsFormsApp1
         private void _startButton_MouseClick(object sender, MouseEventArgs e)
         {
             _mainMenu.Visible = false;
+            _points.Visible = true;
             StartGame();
         }
 
@@ -40,7 +41,7 @@ namespace WindowsFormsApp1
             CreateTable();
             ClearTable();
             CreateStartCircles();
-            MoveStartCircles();
+            //MoveStartCircles();
         }
 
         private void CreateStartCircles()
@@ -48,6 +49,7 @@ namespace WindowsFormsApp1
             for (int i = 0; i < _startSirclesCount; i++)
             {
                 Circle circle = new Circle(1, "blue", true);
+                _gameTable.Controls.Add(circle.GetButton(), _random.Next(0,8), _random.Next(0, 8));
                 _circles.Add(circle);
             }
         }
@@ -56,7 +58,7 @@ namespace WindowsFormsApp1
         {
             foreach (Circle circle in _circles)
             {
-                Console.WriteLine(_table.GetCoordinates(_random.Next(0, 64)));
+                //Console.WriteLine(_table.GetCoordinates(_random.Next(0, 64)));
                 circle.MoveCircle(_table.GetCoordinates(_random.Next(0, 64)));
             }
         }

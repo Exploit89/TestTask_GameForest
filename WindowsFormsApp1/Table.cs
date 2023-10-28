@@ -18,7 +18,7 @@ namespace WindowsFormsApp1
         public Table()
         {
             _tableCoordinates = new Dictionary<int, int[]>();
-            int[] coordinates = new int[_boardCellsCount];
+            int[] coordinates;
             int indexCount = 0;
 
             for (int i = 0; i < _boardCellsSideCount; i++)
