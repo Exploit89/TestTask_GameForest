@@ -69,14 +69,17 @@
             // 
             // button1
             // 
+            this.button1.AllowDrop = true;
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.button1.BackgroundImage = global::WindowsFormsApp1.Resource1.BlueCircle;
             this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.button1.Location = new System.Drawing.Point(5, 5);
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.Location = new System.Drawing.Point(2, 2);
+            this.button1.Margin = new System.Windows.Forms.Padding(0);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(36, 36);
+            this.button1.Size = new System.Drawing.Size(42, 42);
             this.button1.TabIndex = 0;
             this.button1.Text = "button1";
             this.button1.UseVisualStyleBackColor = true;
@@ -108,7 +111,7 @@
             this._points.AutoSize = true;
             this._points.Location = new System.Drawing.Point(13, 13);
             this._points.Name = "_points";
-            this._points.Size = new System.Drawing.Size(35, 13);
+            this._points.Size = new System.Drawing.Size(41, 13);
             this._points.TabIndex = 2;
             this._points.Text = "_points";
             this._points.Visible = false;
@@ -119,8 +122,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(384, 461);
             this.Controls.Add(this._points);
-            this.Controls.Add(this._mainMenu);
             this.Controls.Add(this._gameTable);
+            this.Controls.Add(this._mainMenu);
             this.Name = "Form1";
             this.Text = "Form1";
             this._gameTable.ResumeLayout(false);
@@ -128,6 +131,11 @@
             this.ResumeLayout(false);
             this.PerformLayout();
 
+        }
+
+        private void Button1_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            throw new System.NotImplementedException();
         }
 
         #endregion

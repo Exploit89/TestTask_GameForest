@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace WindowsFormsApp1
 {
@@ -22,13 +23,13 @@ namespace WindowsFormsApp1
         public Form1()
         {
             InitializeComponent();
+            StartGame();
         }
 
         private void _startButton_MouseClick(object sender, MouseEventArgs e)
         {
             _mainMenu.Visible = false;
             _points.Visible = true;
-            StartGame();
         }
 
         private void _gameTable_Paint(object sender, PaintEventArgs e)
@@ -41,7 +42,6 @@ namespace WindowsFormsApp1
             CreateTable();
             ClearTable();
             CreateStartCircles();
-            //MoveStartCircles();
         }
 
         private void CreateStartCircles()
@@ -54,15 +54,6 @@ namespace WindowsFormsApp1
             }
         }
 
-        private void MoveStartCircles()
-        {
-            foreach (Circle circle in _circles)
-            {
-                //Console.WriteLine(_table.GetCoordinates(_random.Next(0, 64)));
-                circle.MoveCircle(_table.GetCoordinates(_random.Next(0, 64)));
-            }
-        }
-
         private void CreateTable()
         {
             _table = new Table();
@@ -71,6 +62,19 @@ namespace WindowsFormsApp1
         private void ClearTable()
         {
             _table.RemoveAllObjects();
+        }
+
+        private void textBox1_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.Text))
+                e.Effect = DragDropEffects.Copy;
+            else
+                e.Effect = DragDropEffects.None;
+        }
+
+        private void textBox1_DragDrop(object sender, DragEventArgs e)
+        {
+            button1.Text = e.Data.GetData(DataFormats.Text).ToString();
         }
     }
 }

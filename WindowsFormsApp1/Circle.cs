@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
+using WindowsFormsApp1;
 
 namespace WindowsFormsApp1
 {
@@ -32,6 +33,12 @@ namespace WindowsFormsApp1
             _button.Size = new Size(36, 36);
             //_button.TabIndex = 0;
             _button.UseVisualStyleBackColor = true;
+            _button.AllowDrop = true;
+            _button.FlatAppearance.BorderSize = 0;
+            _button.Margin = new Padding(0);
+            _button.MouseDown += button_MouseDown;
+            _button.DragEnter += textBox1_DragEnter;
+            _button.DragDrop += textBox1_DragDrop;
 
             switch (color)
             {
@@ -58,6 +65,29 @@ namespace WindowsFormsApp1
         public Button GetButton()
         {
             return _button;
+        }
+
+        private void button_MouseDown(object sender, MouseEventArgs e)
+        {
+            _button.DoDragDrop(_button.Text, DragDropEffects.Copy |
+               DragDropEffects.Move);
+        }
+
+        private void textBox1_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.Text))
+            {
+                e.Effect = DragDropEffects.Copy;
+                e.Effect = DragDropEffects.Move;
+            }
+
+            else
+                e.Effect = DragDropEffects.None;
+        }
+
+        private void textBox1_DragDrop(object sender, DragEventArgs e)
+        {
+            _button.Text = e.Data.GetData(DataFormats.Text).ToString() + "2"; //здесь поработать с числами
         }
     }
 }
