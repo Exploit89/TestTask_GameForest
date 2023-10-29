@@ -42,17 +42,5 @@ namespace WindowsFormsApp1
         {
             
         }
-
-        public int[] GetCoordinates(int index)
-        {
-            foreach (var item in _tableCoordinates)
-            {
-                if(item.Key == index)
-                {
-                    return item.Value;
-                }
-            }
-            return null;
-        }
     }
 }

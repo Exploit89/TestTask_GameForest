@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using System.Xml;
 using WindowsFormsApp1;
 
@@ -18,11 +20,15 @@ namespace WindowsFormsApp1
         private string _color;
         private bool _generation;
         private Button _button;
+        private string _properties;
+
+        public event EventHandler<int> CircleTaken;
 
         public Circle(int level, string color, bool generation)
         {
             _level = level;
             _color = color;
+            _properties = level + color;
             _generation = generation;
             _button = new Button();
             _button.Text = level.ToString();
@@ -39,6 +45,7 @@ namespace WindowsFormsApp1
             _button.MouseDown += button_MouseDown;
             _button.DragEnter += textBox1_DragEnter;
             _button.DragDrop += textBox1_DragDrop;
+            _button.MouseClick += button_MouseClick;
 
             switch (color)
             {
@@ -57,9 +64,9 @@ namespace WindowsFormsApp1
             }
         }
 
-        public void MoveCircle(int[] coordinates)
+        private void button_MouseClick(object sender, MouseEventArgs e)
         {
-            _button.Location = new Point(coordinates[0], coordinates[1]);
+            throw new NotImplementedException();
         }
 
         public Button GetButton()
@@ -69,25 +76,39 @@ namespace WindowsFormsApp1
 
         private void button_MouseDown(object sender, MouseEventArgs e)
         {
-            _button.DoDragDrop(_button.Text, DragDropEffects.Copy |
-               DragDropEffects.Move);
+            _button.DoDragDrop(_properties, DragDropEffects.Copy | DragDropEffects.Move);
         }
 
         private void textBox1_DragEnter(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.Text))
             {
-                e.Effect = DragDropEffects.Copy;
                 e.Effect = DragDropEffects.Move;
             }
-
             else
                 e.Effect = DragDropEffects.None;
         }
 
         private void textBox1_DragDrop(object sender, DragEventArgs e)
         {
-            _button.Text = e.Data.GetData(DataFormats.Text).ToString() + "2"; //здесь поработать с числами
+            var dataLevel = e.Data.GetData(DataFormats.Text).ToString()[0];
+            int currentLevel = int.Parse(dataLevel.ToString());
+            int newLevel = currentLevel + 1;
+            var color = e.Data.GetData(DataFormats.Text).ToString();
+            string currentColor = null;
+
+            for (int i = 1; i < color.Length; i++)
+            {
+                currentColor += color[i];
+            }
+
+            if (currentLevel == _level)
+            {
+                _button.Text = newLevel.ToString();
+                _level = newLevel;
+                _properties = newLevel + _color;
+                CircleTaken?.Invoke(this, _button.);
+            }
         }
     }
 }

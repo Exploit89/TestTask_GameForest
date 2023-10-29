@@ -39,8 +39,8 @@ namespace WindowsFormsApp1
 
         private void StartGame()
         {
-            CreateTable();
-            ClearTable();
+            //CreateTable();
+            //ClearTable();
             CreateStartCircles();
         }
 
@@ -51,6 +51,7 @@ namespace WindowsFormsApp1
                 Circle circle = new Circle(1, "blue", true);
                 _gameTable.Controls.Add(circle.GetButton(), _random.Next(0,8), _random.Next(0, 8));
                 _circles.Add(circle);
+                circle.CircleTaken += TakeCircle;
             }
         }
 
@@ -64,17 +65,9 @@ namespace WindowsFormsApp1
             _table.RemoveAllObjects();
         }
 
-        private void textBox1_DragEnter(object sender, DragEventArgs e)
+        private void TakeCircle(object sender, int e)
         {
-            if (e.Data.GetDataPresent(DataFormats.Text))
-                e.Effect = DragDropEffects.Copy;
-            else
-                e.Effect = DragDropEffects.None;
-        }
-
-        private void textBox1_DragDrop(object sender, DragEventArgs e)
-        {
-            button1.Text = e.Data.GetData(DataFormats.Text).ToString();
+            _gameTable.Controls.RemoveAt(e);
         }
     }
 }
